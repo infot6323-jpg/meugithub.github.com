@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mad Libs</title>
+
+  <style>
+    body{
+      font-family: Arial;
+      padding: 20px;
+    }
+
+    input{
+      display: block;
+      margin-bottom: 10px;
+      padding: 8px;
+      width: 250px;
+    }
+
+    button{
+      padding: 10px;
+      cursor: pointer;
+    }
+
+    button:disabled{
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    #story{
+      margin-top: 20px;
+      font-size: 18px;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Mad Libs</h1>
+
+  <input id="word1" placeholder="Substantivo">
+  <input id="word2" placeholder="Animal">
+  <input id="word3" placeholder="Verbo">
+  <input id="word4" placeholder="Adjetivo">
+  <input id="word5" placeholder="Lugar">
+  <input id="word6" placeholder="Comida">
+  <input id="word7" placeholder="Objeto">
+  <input id="word8" placeholder="Profissão">
+  <input id="word9" placeholder="Número">
+  <input id="word10" placeholder="Emoção">
+
+  <button id="goBtn" onclick="generateStory()" disabled>
+    GO!
+  </button>
+
+  <div id="story"></div>
+
+  <script>
+
+    const inputs = document.querySelectorAll("input");
+    const button = document.getElementById("goBtn");
+
+    function checkInputs() {
+      let allFilled = true;
+
+      inputs.forEach(input => {
+        if (input.value.trim() === "") {
+          allFilled = false;
+        }
+      });
+
+      button.disabled = !allFilled;
+    }
+
+    inputs.forEach(input => {
+      input.addEventListener("input", checkInputs);
+    });
+
+    function generateStory(){
+
+      // proteção extra
+      for (let input of inputs) {
+        if (input.value.trim() === "") {
+          alert("Preencha todos os campos!");
+          return;
+        }
+      }
+
+      const word1 = document.getElementById("word1").value;
+      const word2 = document.getElementById("word2").value;
+      const word3 = document.getElementById("word3").value;
+      const word4 = document.getElementById("word4").value;
+      const word5 = document.getElementById("word5").value;
+      const word6 = document.getElementById("word6").value;
+      const word7 = document.getElementById("word7").value;
+      const word8 = document.getElementById("word8").value;
+      const word9 = document.getElementById("word9").value;
+      const word10 = document.getElementById("word10").value;
+
+      const text = `
+        Ontem eu estava andando tranquilamente por ${word5}
+        quando um(a) ${word1} apareceu do nada carregando exatamente
+        ${word9} ${word2}(s) extremamente ${word4}(s).<br><br>
+
+        Do nada, todos começaram a ${word3}
+        ao mesmo tempo enquanto jogavam ${word6} pela janela.<br><br>
+
+        A situação ficou ainda pior quando um(a) ${word8}
+        apareceu segurando apenas um(a) ${word7}
+        e gritando:<br><br>
+
+        "NINGUÉM NUNCA VAI ACREDITAR EM VOCÊ!"<br><br>
+
+        Nesse momento, um(a) dos(as) ${word2} olhou diretamente pra mim
+        com uma expressão de pura ${word10}
+        e começou a correr em câmera lenta.<br><br>
+
+        No final, acordei sem entender absolutamente nada
+        do que tinha acontecido.
+      `;
+
+      document.getElementById("story").innerHTML = text;
+    }
+
+  </script>
+
+</body>
+</html>
